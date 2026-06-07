@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>码支付 - 聚合支付API专家 | 免签约即时回调</title>
+    <meta name="description" content="码支付提供个人/个体户/企业全场景聚合支付API，微信支付宝富友拉卡拉多渠道，资金直达，7×24小时自动化回调，极速接入免签约。">
+    <meta name="keywords" content="码支付,聚合支付API,免签约支付,即时回调,个人收款,企业支付接口">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://pay.mymzf.com/" />
+    
+    <!-- Font Awesome 6 (现代图标库) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- 结构化数据 Organization & Service -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "码支付",
+      "url": "https://pay.mymzf.com/",
+      "logo": "https://pay.mymzf.com/logo-icon.png",
+      "description": "码支付是新一代聚合支付API平台，为个人站长、个体户及企业提供免签约、实时回调的收款解决方案，资金直达账户。",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "availableLanguage": "Chinese"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "provider": { "@type": "Organization", "name": "码支付" },
+      "serviceType": ["个人支付API", "个体户支付API", "企业支付API", "聚合免签接口"],
+      "description": "支持微信支付、支付宝、富友、拉卡拉全通道，即时回调，资金直达，7×24小时自动化处理。"
+    }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Microsoft YaHei', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: #0f172a;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .nav-flex {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icon {
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+        }
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #FFFFFF, #94a3b8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            align-items: center;
+        }
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+            font-size: 0.95rem;
+        }
+        .nav-links a:hover {
+            color: #60a5fa;
+        }
+        .btn-outline-light {
+            border: 1px solid #3b82f6;
+            background: transparent;
+            padding: 6px 16px;
+            border-radius: 30px;
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        .btn-outline-light:hover {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+            padding: 6px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 2px 6px rgba(59,130,246,0.3);
+        }
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        /* 按钮通用 */
+        .btn-gradient {
+            background: linear-gradient(98deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            display: inline-block;
+            transition: 0.2s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 18px rgba(59,130,246,0.25);
+        }
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 22px rgba(59,130,246,0.35);
+            background: linear-gradient(98deg, #2563eb, #1d4ed8);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #3b82f6;
+            color: #3b82f6;
+            padding: 10px 26px;
+            border-radius: 40px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .btn-outline:hover {
+            background: #eff6ff;
+            transform: translateY(-1px);
+        }
+
+        /* Hero 区域 */
+        .hero {
+            padding: 80px 0 60px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+        .hero-grid {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        .hero-content {
+            flex: 1.2;
+        }
+        .hero-badge {
+            background: #dbeafe;
+            color: #1e40af;
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #0f172a, #2d3a5e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .hero-highlight {
+            color: #3b82f6;
+        }
+        .hero-desc {
+            font-size: 1.2rem;
+            color: #334155;
+            margin-bottom: 32px;
+            max-width: 550px;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .hero-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 48px;
+        }
+        .stat-item h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .hero-visual {
+            flex: 0.9;
+            background: rgba(255,255,255,0.6);
+            border-radius: 32px;
+            padding: 20px;
+            text-align: center;
+        }
+        .qr-mock {
+            background: white;
+            border-radius: 28px;
+            padding: 20px;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+        }
+        .mock-code {
+            background: #f1f5f9;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: repeating-linear-gradient(45deg, #cbd5e1 0px, #cbd5e1 6px, #e2e8f0 6px, #e2e8f0 12px);
+        }
+        .mock-code i {
+            font-size: 60px;
+            color: #3b82f6;
+            background: white;
+            padding: 12px;
+            border-radius: 20px;
+        }
+        .payment-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            font-size: 26px;
+            color: #334155;
+        }
+
+        /* 服务卡片 */
+        .section {
+            padding: 70px 0;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #0f172a;
+        }
+        .section-sub {
+            text-align: center;
+            color: #475569;
+            max-width: 680px;
+            margin: 0 auto 48px;
+        }
+        .cards-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        .card-service {
+            background: white;
+            border-radius: 28px;
+            padding: 32px 24px;
+            flex: 1;
+            min-width: 250px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+            transition: all 0.25s;
+            border: 1px solid #eef2ff;
+            text-align: center;
+        }
+        .card-service:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 40px rgba(0,0,0,0.08);
+            border-color: #b9d0ff;
+        }
+        .card-icon {
+            font-size: 48px;
+            background: #eef2ff;
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            border-radius: 50px;
+            margin: 0 auto 20px;
+            color: #3b82f6;
+        }
+        .card-service h3 {
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+        }
+        .card-service p {
+            color: #475569;
+            margin-bottom: 20px;
+        }
+        .card-link {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        /* 合作伙伴区域 */
+        .partners {
+            background: #f8fafc;
+            padding: 50px 0;
+            text-align: center;
+        }
+        .partner-logos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 32px;
+        }
+        .partner-item {
+            font-size: 1.8rem;
+            font-weight: 600;
+            background: white;
+            padding: 12px 28px;
+            border-radius: 60px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: #1f2937;
+        }
+        .partner-item i {
+            font-size: 32px;
+        }
+
+        /* 优势区域双列 */
+        .advantages {
+            background: white;
+        }
+        .feature-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 20px;
+        }
+        .feature-col {
+            flex: 1;
+        }
+        .feature-item {
+            margin-bottom: 32px;
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+        }
+        .feature-icon {
+            background: #eef2ff;
+            width: 48px;
+            height: 48px;
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: #2563eb;
+            flex-shrink: 0;
+        }
+        .feature-text h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .cta-block {
+            text-align: center;
+            margin-top: 40px;
+            background: linear-gradient(100deg, #f0f9ff, #eef2ff);
+            padding: 48px 20px;
+            border-radius: 48px;
+        }
+
+        footer {
+            background: #0f172a;
+            padding: 40px 0 24px;
+            color: #cbd5e1;
+            text-align: center;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+        }
+        .footer-links a:hover {
+            color: white;
+        }
+        .copyright a {
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+        @media (max-width: 800px) {
+            .hero h1 { font-size: 2.2rem; }
+            .nav-flex { flex-direction: column; align-items: center; }
+            .nav-links { justify-content: center; gap: 16px; }
+            .hero-grid { flex-direction: column; }
+            .hero-content { text-align: center; }
+            .hero-buttons { justify-content: center; }
+            .hero-desc { margin-left: auto; margin-right: auto; }
+            .stat-item h3 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container nav-flex">
+        <div class="logo">
+            <div class="logo-icon"><i class="fas fa-qrcode"></i></div>
+            <span class="logo-text">码支付</span>
+        </div>
+        <div class="nav-links">
+            <a href="/">首页</a>
+            <a href="https://pay.mymzf.com/demo" target="_blank"><i class="fas fa-flask"></i> demo测试</a>
+            <a href="https://pay.mymzf.com/doc" target="_blank"><i class="fas fa-file-alt"></i> 开发文档</a>
+            <a href="https://pay.mymzf.com/templates/index/index8/assets/template/index/default/image/weixin.jpg" target="_blank"><i class="fab fa-weixin"></i> 客服微信</a>
+            <a href="https://pay.mymzf.com/login" class="btn-outline-light">商户登录</a>
+            <a href="https://pay.mymzf.com/register" class="btn-primary">注册商户</a>
+        </div>
+    </div>
+</nav>
+
+<main>
+    <!-- Hero 主视觉 -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <div class="hero-badge"><i class="fas fa-bolt"></i> 即时回调 · 免签约 · 资金直达</div>
+                <h1>让支付接入像<span class="hero-highlight">扫码一样简单</span><br>专业聚合<span class="hero-highlight">码支付API</span></h1>
+                <p class="hero-desc">为创业者、个人开发者、个体户及企业而生。支持微信、支付宝、富友、拉卡拉全渠道，7×24小时无人值守自动回调，资金直达您的账户。</p>
+                <div class="hero-buttons">
+                    <a href="https://pay.mymzf.com/register" class="btn-gradient"><i class="fas fa-rocket"></i> 极速注册 · 免费对接</a>
+                    <a href="https://pay.mymzf.com/doc" class="btn-outline"><i class="fas fa-code"></i> 查看API文档</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item"><h3>99.9%</h3><span>系统可用率</span></div>
+                    <div class="stat-item"><h3>< 0.5s</h3><span>平均回调</span></div>
+                    <div class="stat-item"><h3>7×24h</h3><span>自动化运维</span></div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="qr-mock">
+                    <div class="mock-code">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <div class="payment-icons">
+                        <i class="fab fa-alipay" style="color:#1677ff;"></i>
+                        <i class="fab fa-weixin" style="color:#2bae00;"></i>
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <p style="margin-top: 16px; font-weight:500;">微信 | 支付宝 | 聚合收款</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 个人/个体户/企业 全类型收款 -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">覆盖<span class="hero-highlight">个人 · 个体户 · 企业</span> 全场景支付</h2>
+            <p class="section-sub">无论您是个人开发者、个体商户还是企业公司，码支付均提供快速接入方案，稳定合规。</p>
+            <div class="cards-grid">
+                <div class="card-service">
+                    <div class="card-icon"><i class="fas fa-user-check"></i></div>
+                    <h3>个人支付</h3>
+                    <p>无需营业执照，身份证+手机号即可开通，微信/支付宝个人码聚合，资金直达到账。</p>
+                    <a href="https://pay.mymzf.com/register" class="card-link">立即开启 <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="card-service">
+                    <div class="card-icon"><i class="fas fa-store"></i></div>
+                    <h3>个体户支付</h3>
+                    <p>个体工商户专享通道，稳定高并发，支持门店收款、线上API集成，费率更优。</p>
+                    <a href="https://pay.mymzf.com/register" class="card-link">入驻通道 <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="card-service">
+                    <div class="card-icon"><i class="fas fa-building"></i></div>
+                    <h3>企业支付</h3>
+                    <p>企业级专属商务方案，大额收款、发票报销、多账户管理，合规安全可靠。</p>
+                    <a href="https://pay.mymzf.com/templates/index/index8/assets/template/index/default/image/weixin.jpg" target="_blank" class="card-link">联系客户经理 <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 合作支付伙伴 -->
+    <div class="partners">
+        <div class="container">
+            <h2 class="section-title" style="font-size:1.8rem;">官方合作 · 持牌支付通道</h2>
+            <div class="partner-logos">
+                <div class="partner-item"><i class="fab fa-alipay" style="color:#1677ff;"></i> 支付宝</div>
+                <div class="partner-item"><i class="fab fa-weixin" style="color:#2bae00;"></i> 微信支付</div>
+                <div class="partner-item"><i class="fas fa-building"></i> 富友支付</div>
+                <div class="partner-item"><i class="fas fa-credit-card"></i> 拉卡拉</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 优势详情区块 -->
+    <section class="section advantages">
+        <div class="container">
+            <h2 class="section-title">为什么开发者与商户选择<span class="hero-highlight">码支付</span></h2>
+            <p class="section-sub">极致稳定的聚合API，让每一笔交易都安全无忧</p>
+            <div class="feature-grid">
+                <div class="feature-col">
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                        <div class="feature-text">
+                            <h3>极速接入，10分钟完成对接</h3>
+                            <p>完整API文档，支持PHP/Java/Python等多语言SDK，Demo示例一键测试，个人开发者无门槛接入。</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div class="feature-text">
+                            <h3>资金安全 · 直接到账</h3>
+                            <p>不经过第三方中间账户，资金由微信/支付宝/银行原路结算到您绑定的银行卡或钱包，每笔订单实时清算。</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                        <div class="feature-text">
+                            <h3>专业售后与技术支持</h3>
+                            <p>7×12小时在线客服 + 技术工单系统，1对1商务支持，提供稳定可靠的运维保障。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-col">
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="feature-text">
+                            <h3>7×24小时自动回调</h3>
+                            <p>无人值守系统自动处理支付通知，毫秒级异步回调，订单状态实时同步，不掉单。</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                        <div class="feature-text">
+                            <h3>灵活费率，透明结算</h3>
+                            <p>无隐藏费用，每笔明细清晰可查，支持日结/周结/月结多种结算周期，低成本高效率。</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fas fa-layer-group"></i></div>
+                        <div class="feature-text">
+                            <h3>多渠道智能路由</h3>
+                            <p>微信、支付宝、富友、拉卡拉聚合通道自动切换保障成功率，提升支付转化。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-block">
+                <h3 style="font-size: 1.8rem; margin-bottom: 12px;">即刻开启聚合支付之旅</h3>
+                <p style="margin-bottom: 28px; color: #2c3e66;">无需企业资质，个人也能轻松接入 · 免费注册体验高效收款</p>
+                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                    <a href="https://pay.mymzf.com/register" class="btn-gradient"><i class="fas fa-user-plus"></i> 免费注册商户</a>
+                    <a href="https://pay.mymzf.com/demo" target="_blank" class="btn-outline"><i class="fas fa-play-circle"></i> 在线演示Demo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-links">
+            <a href="https://pay.mymzf.com/">官网首页</a>
+            <a href="https://pay.mymzf.com/doc" target="_blank">开发文档</a>
+            <a href="https://pay.mymzf.com/login">商户登录</a>
+            <a href="https://pay.mymzf.com/templates/index/index8/assets/template/index/default/image/weixin.jpg" target="_blank">客服中心</a>
+            <a href="#">隐私条款</a>
+        </div>
+        <div class="copyright">
+            <p>© 码支付 GoPay · 专业聚合支付API平台 | 资金安全 · 即时回调 · 免签约接入</p>
+            <p style="font-size: 0.7rem; margin-top: 12px;">本平台提供支付接口技术服务，不涉及资金存管，结算均由持牌支付机构完成。</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // 动态更新footer年份
+    document.querySelector('.copyright p:first-child').innerHTML = `© 码支付 GoPay ${new Date().getFullYear()} · 专业聚合支付API平台 | 资金安全 · 即时回调 · 免签约接入`;
+</script>
+</body>
+</html>
